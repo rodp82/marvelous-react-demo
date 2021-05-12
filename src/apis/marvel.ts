@@ -8,6 +8,7 @@ const axiosReqAuth = async (reqConfig: AxiosRequestConfig): Promise<AxiosRequest
   const hash = MD5(`${ts}${config.marvelApi.privateKey}${config.marvelApi.publicKey}`);
 
   reqConfig.params = {
+    ...reqConfig.params,
     hash: hash.toString(),
     ts: ts,
     apikey: config.marvelApi.publicKey

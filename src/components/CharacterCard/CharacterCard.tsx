@@ -7,6 +7,10 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: '#EC1D24'
+    }
   },
   cardMedia: {
     paddingTop: '56.25%', // 16:9
@@ -16,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const CharacterCard: React.FC<{ character: Character, openHandler: any }> = (props) => {
+const CharacterCard: React.FC<{ character: Character, clickHandler: any }> = (props) => {
 
   const classes = useStyles();
 
@@ -26,21 +30,22 @@ const CharacterCard: React.FC<{ character: Character, openHandler: any }> = (pro
         className={classes.cardMedia}
         image={props.character.thumbnail?.path + '/landscape_xlarge.jpg'}
         title="Image title"
+        onClick={() => props.clickHandler(props.character)}
       />
       <CardContent className={classes.cardContent}>
-        <Typography gutterBottom variant="h5" component="h2" onClick={() => props.openHandler(props.character)}>
+        <Typography gutterBottom variant="h5" component="h2" onClick={() => props.clickHandler(props.character)}>
           {props.character.name}
         </Typography>
         {/* <Typography>
                   {props.character.description}
                 </Typography> */}
       </CardContent>
-      <CardActions>
+      {/* <CardActions>
         <Button size="small" color="primary">Comics</Button>
         <Button size="small" color="primary">Events</Button>
         <Button size="small" color="primary">Series</Button>
         <Button size="small" color="primary">Stories</Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   )
 }
