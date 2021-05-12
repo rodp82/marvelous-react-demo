@@ -13,7 +13,7 @@ export default function Header() {
   return (
     <AppBar position="relative">
       <Toolbar>
-        <Typography variant="h6" color="inherit" noWrap>MARVELous React</Typography>
+        <Typography variant="h6" color="inherit" noWrap data-testid="headerTitle">MARVELous React</Typography>
       </Toolbar>
     </AppBar>
   );

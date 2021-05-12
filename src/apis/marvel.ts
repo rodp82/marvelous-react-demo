@@ -1,22 +1,32 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { config } from '../config';
 import MD5 from "crypto-js/md5";
 
-export const getCharacters = (): Promise<AxiosResponse<CharacterDataWrapper>> => {
-
-  const url = `${config.marvelApi.baseUrl}/characters`;
-  const ts = 'asdf';
+// Request interceptor to setup the apikey and hash query params
+const axiosReqAuth = async (reqConfig: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
+  const ts = new Date().toISOString();
   const hash = MD5(`${ts}${config.marvelApi.privateKey}${config.marvelApi.publicKey}`);
 
-  return axios.get(url, {
-    params: {
-      hash: hash.toString(),
-      ts: ts,
-      apikey: config.marvelApi.publicKey
-    }
-  })
-}
+  reqConfig.params = {
+    hash: hash.toString(),
+    ts: ts,
+    apikey: config.marvelApi.publicKey
+  };
 
+  return reqConfig;
+};
+
+// Axios Instance to setup base URL and request headers
+const axiosGet = axios.create({
+  baseURL: config.marvelApi.baseUrl,
+  headers: { "Content-Type": "application/json", Accept: "application/json" },
+});
+
+axiosGet.interceptors.request.use(axiosReqAuth);
+
+/**
+ * Data model interfaces from https://developer.marvel.com/docs
+ */
 export interface CharacterDataWrapper {
   code?: number; // (int, optional): The HTTP status code of the returned result.,
   status?: string; // (string, optional): A string description of the call status.,
@@ -107,3 +117,5 @@ export interface SeriesSummary {
   resourceURI?: string; //  (string, optional): The path to the individual series resource.,
   name?: string; //  (string, optional): The canonical name of the series.
 }
+
+export default axiosGet;
