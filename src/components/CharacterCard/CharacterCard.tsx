@@ -1,6 +1,6 @@
-import { Card, CardMedia, CardContent, Typography, CardActions, Button, makeStyles } from '@material-ui/core';
+import { Card, CardMedia, CardContent, Typography, makeStyles } from '@material-ui/core';
 import React from 'react'
-import { Character } from '../../apis/marvel';
+import { Character } from '../../models';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -36,16 +36,7 @@ const CharacterCard: React.FC<{ character: Character, clickHandler: any }> = (pr
         <Typography gutterBottom variant="h5" component="h2" onClick={() => props.clickHandler(props.character)}>
           {props.character.name}
         </Typography>
-        {/* <Typography>
-                  {props.character.description}
-                </Typography> */}
       </CardContent>
-      {/* <CardActions>
-        <Button size="small" color="primary">Comics</Button>
-        <Button size="small" color="primary">Events</Button>
-        <Button size="small" color="primary">Series</Button>
-        <Button size="small" color="primary">Stories</Button>
-      </CardActions> */}
     </Card>
   )
 }

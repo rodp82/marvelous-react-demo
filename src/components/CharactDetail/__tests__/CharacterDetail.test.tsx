@@ -1,18 +1,18 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import CharacterCard from '../CharacterCard';
+import CharacterDetail from '../CharacterDetail';
 import { Character } from '../../../models';
 
-describe('CharacterCard', () => {
+describe('CharacterDetail', () => {
 
-  it('Shows a card with the Character name and image', async () => {
+  it('CharacterDetail shows correct information', async () => {
 
     const character: Character = {
       id: 123,
       name: 'SuperMan',
       description: 'SuperMan Description'
     }
-    render(<CharacterCard character={character} clickHandler={() => {}} />);
+    render(<CharacterDetail character={character} closeHandler={() => {}} open={true} />);
     expect(screen.getByText(character.name!)).toBeInTheDocument();
     // expect(screen.getByText(character.description!)).toBeInTheDocument();
   })
